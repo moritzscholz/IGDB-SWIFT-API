@@ -9,12 +9,22 @@
 import Foundation
 import Just
 
-private let APIURL = "https://api.igdb.com/v4"
 
 public class IGDBWrapper {
-    private var requestHeaders = ["x-user-agent": "igdb-api-swift"]
+    private var APIURL: String
+    private var requestHeaders: [String: String]
+
     public init(clientID: String, accessToken: String) {
-        requestHeaders = ["x-user-agent": "igdb-api-swift", "client-id": clientID, "authorization": "Bearer \(accessToken)"]
+        requestHeaders = ["x-user-agent": "igdb-api-swift",
+                          "client-id": clientID,
+                          "authorization": "Bearer \(accessToken)"]
+        APIURL = "https://api.igdb.com/v4"
+    }
+
+    public init(proxyURL: String, headers: [String: String] = [:]) {
+        requestHeaders = headers
+        requestHeaders["x-user-agent"] = "igdb-api-swift"
+        APIURL = proxyURL
     }
     
     public func apiProtoRequest(endpoint: Endpoint, apicalypseQuery: String, dataResponse: @escaping (Data) -> (Void), errorResponse: @escaping (RequestException) -> (Void)) {
