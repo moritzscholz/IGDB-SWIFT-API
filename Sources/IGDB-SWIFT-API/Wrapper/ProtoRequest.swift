@@ -104,7 +104,7 @@ public extension IGDBWrapper {
     
     func games(apiCalypse: APICalypse, result: @escaping ([Proto_Game]) -> (Void), errorResponse: @escaping (RequestException) -> (Void)) {
         apiProtoRequest(endpoint: .GAMES, apicalypseQuery: apiCalypse.buildQuery(), dataResponse: { bytes -> (Void) in
-            let objects = try! Proto_GameResult(serializedData: bytes).games
+            let objects = (try? Proto_GameResult(serializedData: bytes).games) ?? []
             result(objects)
         }, errorResponse: errorResponse)
     }
