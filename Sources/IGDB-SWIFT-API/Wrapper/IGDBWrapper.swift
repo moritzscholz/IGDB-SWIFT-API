@@ -33,7 +33,7 @@ public class IGDBWrapper {
             if response.statusCode != 200 {
                 errorResponse(RequestException(statusCode: response.statusCode ?? -1, url: requestURL, msg: response.text ?? ""))
             }
-            dataResponse(response.content!)
+            dataResponse(response.content ?? Data())
         })
     }
     
@@ -55,7 +55,7 @@ public class IGDBWrapper {
             if response.statusCode != 200 {
                 errorResponse(RequestException(statusCode: response.statusCode ?? -1, url: requestURL, msg: response.text ?? ""))
             }
-            dataResponse(response.content!)
+            dataResponse(response.content ?? Data())
         })
     }
     
